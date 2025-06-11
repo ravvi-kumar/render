@@ -1,0 +1,15 @@
+{
+  "name": "prepvia-mono",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm run -r --parallel --aggregate-output dev",
+    "build": "pnpm -r build",
+    "check-types": "pnpm -r check-types"
+  },
+  "dependencies": {},
+  "packageManager": "pnpm@10.8.0"
+}

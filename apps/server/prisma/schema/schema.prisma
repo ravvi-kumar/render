@@ -1,0 +1,46 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../generated"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model inventoryData {
+  id        String          @id @default(uuid()) @map("_id")
+  userId    String
+  items     InventoryItem[]
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@map("inventory_data")
+}
+
+model InventoryItem {
+  id              String   @id @default(uuid()) @map("_id")
+  inventoryDataId String
+  userId          String
+  image           String   @map("IMAGE")
+  name            String   @map("Name")
+  sku             String   @map("SKU")
+  upc             String   @map("UPC")
+  comments        String   @map("COMMENTS")
+  inbound         Float    @map("Inbound")
+  tag             String   @map("Tag")
+  weight          Float    @map("weight (LBS)")
+  cubicQtyPerUnit Float    @default(0) @map("Cubic QTY / per unit")
+  stock           Int      @default(0) @map("Stock")
+  key             String?
+  imageUrl        String?  @map("image_url")
+  received        Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relation back to InventoryData
+  inventoryData inventoryData @relation(fields: [inventoryDataId], references: [id])
+
+  @@map("inventory_item")
+}
