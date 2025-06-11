@@ -22,7 +22,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "D:\\sukhpreet-work\\prepvia-monorepo\\apps\\server\\prisma\\generated",
+      "value": "/Users/ravikumar/dev/dsb/prepvia-monorepo/apps/server/prisma/generated",
       "fromEnvVar": null
     },
     "config": {
@@ -32,12 +32,16 @@ const config: runtime.GetPrismaClientConfig = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\sukhpreet-work\\prepvia-monorepo\\apps\\server\\prisma\\schema\\schema.prisma",
+    "sourceFilePath": "/Users/ravikumar/dev/dsb/prepvia-monorepo/apps/server/prisma/schema/schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../schema",
@@ -47,6 +51,7 @@ const config: runtime.GetPrismaClientConfig = {
     "db"
   ],
   "activeProvider": "mongodb",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -55,8 +60,8 @@ const config: runtime.GetPrismaClientConfig = {
       }
     }
   },
-  "inlineSchema": "model User {\n  id            String    @id @map(\"_id\")\n  name          String\n  email         String\n  emailVerified Boolean\n  image         String?\n  createdAt     DateTime\n  updatedAt     DateTime\n  role          String?   @default(\"user\")\n  banned        Boolean?\n  banReason     String?\n  banExpires    DateTime?\n  sessions      Session[]\n  accounts      Account[]\n\n  @@unique([email])\n  @@map(\"user\")\n}\n\nmodel Session {\n  id             String   @id @map(\"_id\")\n  expiresAt      DateTime\n  token          String\n  createdAt      DateTime\n  updatedAt      DateTime\n  ipAddress      String?\n  userAgent      String?\n  userId         String\n  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  impersonatedBy String?\n\n  @@unique([token])\n  @@map(\"session\")\n}\n\nmodel Account {\n  id                    String    @id @map(\"_id\")\n  accountId             String\n  providerId            String\n  userId                String\n  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  accessToken           String?\n  refreshToken          String?\n  idToken               String?\n  accessTokenExpiresAt  DateTime?\n  refreshTokenExpiresAt DateTime?\n  scope                 String?\n  password              String?\n  createdAt             DateTime\n  updatedAt             DateTime\n\n  @@map(\"account\")\n}\n\nmodel Verification {\n  id         String    @id @map(\"_id\")\n  identifier String\n  value      String\n  expiresAt  DateTime\n  createdAt  DateTime?\n  updatedAt  DateTime?\n\n  @@map(\"verification\")\n}\n\ngenerator client {\n  provider     = \"prisma-client\"\n  output       = \"../generated\"\n  moduleFormat = \"esm\"\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel inventoryData {\n  id        String          @id @default(uuid()) @map(\"_id\")\n  userId    String\n  items     InventoryItem[]\n  createdAt DateTime        @default(now())\n  updatedAt DateTime        @updatedAt\n\n  @@map(\"inventory_data\")\n}\n\nmodel InventoryItem {\n  id              String   @id @default(uuid()) @map(\"_id\")\n  inventoryDataId String\n  userId          String\n  image           String   @map(\"IMAGE\")\n  name            String   @map(\"Name\")\n  sku             String   @map(\"SKU\")\n  upc             String   @map(\"UPC\")\n  comments        String   @map(\"COMMENTS\")\n  inbound         Float    @map(\"Inbound\")\n  tag             String   @map(\"Tag\")\n  weight          Float    @map(\"weight (LBS)\")\n  cubicQtyPerUnit Float    @default(0) @map(\"Cubic QTY / per unit\")\n  stock           Int      @default(0) @map(\"Stock\")\n  key             String?\n  imageUrl        String?  @map(\"image_url\")\n  received        Boolean  @default(false)\n  createdAt       DateTime @default(now())\n  updatedAt       DateTime @updatedAt\n\n  // Relation back to InventoryData\n  inventoryData inventoryData @relation(fields: [inventoryDataId], references: [id])\n\n  @@map(\"inventory_item\")\n}\n",
-  "inlineSchemaHash": "358a5ea2a5283f2a960ba13b601cf991b2828d50bae62c09f8aa2d27946c4ba4",
+  "inlineSchema": "model User {\n  id            String    @id @map(\"_id\")\n  name          String\n  email         String\n  emailVerified Boolean\n  image         String?\n  createdAt     DateTime\n  updatedAt     DateTime\n  role          String?   @default(\"user\")\n  banned        Boolean?\n  banReason     String?\n  banExpires    DateTime?\n  sessions      Session[]\n  accounts      Account[]\n\n  @@unique([email])\n  @@map(\"user\")\n}\n\nmodel Session {\n  id             String   @id @map(\"_id\")\n  expiresAt      DateTime\n  token          String\n  createdAt      DateTime\n  updatedAt      DateTime\n  ipAddress      String?\n  userAgent      String?\n  userId         String\n  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  impersonatedBy String?\n\n  @@unique([token])\n  @@map(\"session\")\n}\n\nmodel Account {\n  id                    String    @id @map(\"_id\")\n  accountId             String\n  providerId            String\n  userId                String\n  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  accessToken           String?\n  refreshToken          String?\n  idToken               String?\n  accessTokenExpiresAt  DateTime?\n  refreshTokenExpiresAt DateTime?\n  scope                 String?\n  password              String?\n  createdAt             DateTime\n  updatedAt             DateTime\n\n  @@map(\"account\")\n}\n\nmodel Verification {\n  id         String    @id @map(\"_id\")\n  identifier String\n  value      String\n  expiresAt  DateTime\n  createdAt  DateTime?\n  updatedAt  DateTime?\n\n  @@map(\"verification\")\n}\n\ngenerator client {\n  provider      = \"prisma-client\"\n  output        = \"../generated\"\n  moduleFormat  = \"esm\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel inventoryData {\n  id        String          @id @default(uuid()) @map(\"_id\")\n  userId    String\n  items     InventoryItem[]\n  createdAt DateTime        @default(now())\n  updatedAt DateTime        @updatedAt\n\n  @@map(\"inventory_data\")\n}\n\nmodel InventoryItem {\n  id              String   @id @default(uuid()) @map(\"_id\")\n  inventoryDataId String\n  userId          String\n  image           String   @map(\"IMAGE\")\n  name            String   @map(\"Name\")\n  sku             String   @map(\"SKU\")\n  upc             String   @map(\"UPC\")\n  comments        String   @map(\"COMMENTS\")\n  inbound         Float    @map(\"Inbound\")\n  tag             String   @map(\"Tag\")\n  weight          Float    @map(\"weight (LBS)\")\n  cubicQtyPerUnit Float    @default(0) @map(\"Cubic QTY / per unit\")\n  stock           Int      @default(0) @map(\"Stock\")\n  key             String?\n  imageUrl        String?  @map(\"image_url\")\n  received        Boolean  @default(false)\n  createdAt       DateTime @default(now())\n  updatedAt       DateTime @updatedAt\n\n  // Relation back to InventoryData\n  inventoryData inventoryData @relation(fields: [inventoryDataId], references: [id])\n\n  @@map(\"inventory_item\")\n}\n",
+  "inlineSchemaHash": "ed8a1001aeae531150d42b68b70c8a010b2ce55b8e2e635a83c864061c13f059",
   "copyEngine": true,
   "runtimeDataModel": {
     "models": {},
