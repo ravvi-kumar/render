@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getSession } from './utils/get-session';
+// import { getSession } from './utils/get-session';
+import { getSessionCookie } from 'better-auth/cookies';
 
 export async function middleware(request: NextRequest) {
-  const session = await getSession(request);
+  const session = getSessionCookie(request);
   console.log('session in middleware', session);
 
   if (!session) {
