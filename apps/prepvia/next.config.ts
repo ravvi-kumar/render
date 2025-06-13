@@ -28,7 +28,7 @@ const nextConfig: NextConfig = {
         destination: `${process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:8080'}/api/:path*`
       },
       {
-        source: '/trpc/:path*)',
+        source: '/trpc/:path*',
         destination: `${process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:8080'}/trpc/:path*`
       }
     ];
